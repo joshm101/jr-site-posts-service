@@ -1,8 +1,18 @@
 const app = require('../app')
+const dbConnect = require('./utils/db-connect')
 
 const port = process.env.JR_SITE_POSTS_SERVICE_PORT || 3015
 
 console.log('Initializing the service...')
+
+dbConnect().then(() => {
+  console.log('Database connection succcessfully established.')
+}).catch(error => {
+  console.log('An error occurred while connecting to the database.')
+  console.error(`${error.message}`)
+  console.log('Exiting.')
+  process.exit(1)
+})
 
 const server = app.listen(
   port,
