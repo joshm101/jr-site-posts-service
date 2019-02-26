@@ -4,15 +4,15 @@ const { Schema } = mongoose
 const { ObjectId } = Schema.Types
 
 const PostSchema = new Schema({
-  title: String,
-  description: String,
-  images: [String],
-  thumbnailImage: String,
+  title: { type: String, default: '' },
+  description: { type: String, default: '' },
+  images: { type: [String], default: [] },
+  thumbnailImage: { type: String, default: '' },
   createdBy: ObjectId,
-  created: Date,
-  updated: Date,
-  embedContent: String,
-  featured: Boolean,
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now },
+  embedContent: { type: String, default: '' },
+  featured: { type: Boolean, default: false },
   type: ObjectId
 })
 
