@@ -1,0 +1,13 @@
+const app = require('../app')
+
+const port = process.env.JR_SITE_POSTS_SERVICE_PORT || 3015
+
+console.log('Initializing the service...')
+
+const server = app.listen(
+  port,
+  () => console.log(`Listening on port ${port}`)
+)
+
+// for testing
+module.exports = server
