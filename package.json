@@ -1,0 +1,11 @@
+{
+  "name": "jr-site-posts-service",
+  "version": "1.0.0",
+  "description": "Microservice for jr-site's posts",
+  "main": "bin/www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Mora",
+  "license": "ISC"
+}
