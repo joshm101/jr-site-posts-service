@@ -1,6 +1,8 @@
 const Post = require('../../models/Post')
 const PostType = require('../../models/PostType')
 
+const { writePostToDatabase } = require('../../utils')
+
 const postTypeValid = typeId => {
     const query = PostType.findById(typeId)
     const queryPromise = query.exec()
@@ -13,10 +15,6 @@ const postTypeValid = typeId => {
       }
     })
 }
-
-const writePostToDatabase = data => (
-  Post.create(data)
-)
 
 const createPost = (req, res) => {
   const {
