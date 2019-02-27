@@ -47,7 +47,7 @@ const createPost = (req, res) => {
 
   // TODO: JWT validation, access user info from JWT
 
-  postTypeValid(type).then(postType => {
+  postTypeValid(type).then(() => {
     return writePostToDatabase({
       title,
       description,
