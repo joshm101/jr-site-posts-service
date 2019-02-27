@@ -9,25 +9,19 @@ chai.use(chaiHttp)
 const { expect } = chai
 
 let id = ''
-let type = ''
 
 const deletePostRequest = postId => {
   return chai.request(server).delete(`/api/posts/${postId}`)
 }
 
 describe('delete post', () => {
-  beforeEach(done => {
-    const query = PostType.create({ name: 'default' })
+  before(done => {
+    // before tests run, create post to use for testing
+    const createPostQuery = Post.create({ title: 'test' })
 
-    query.then(postType => {
-      type = postType._id
-    }).then(() => {
-      const createPostQuery = Post.create({ title: 'test', type })
-
-      createPostQuery.then(post => {
-        id = post._id
-        done()
-      })
+    createPostQuery.then(post => {
+      id = post._id
+      done()
     }).catch(console.log)
   })
 
@@ -45,6 +39,7 @@ describe('delete post', () => {
     })
   })
 
+  // remove all posts after all tests are done
   after(done => {
     const query = Post.deleteMany({})
 
