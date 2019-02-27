@@ -5,7 +5,13 @@ const postTypeValid = typeId => {
     const query = PostType.findById(typeId)
     const queryPromise = query.exec()
 
-    return queryPromise
+    return queryPromise.then(postType => {
+      if (!postType) {
+        // post type with ID of typeId not found,
+        // throw errror
+        throw new Error('Invalid post type')
+      }
+    })
 }
 
 const writePostToDatabase = data => (
@@ -27,7 +33,7 @@ const createPost = (req, res) => {
     res.status(400).send({
       message: 'A post must have a title'
     })
-    
+
     return
   }
 
@@ -41,7 +47,7 @@ const createPost = (req, res) => {
 
   // TODO: JWT validation, access user info from JWT
 
-  postTypeValid(type).then(_ => {  
+  postTypeValid(type).then(() => {
     return writePostToDatabase({
       title,
       description,
@@ -56,7 +62,9 @@ const createPost = (req, res) => {
       res.status(500).send('Could not save post')
     )
   }).catch(error =>
-    res.status(400).send('Invalid post type specified')  
+    // postTypeValid util threw error indicating that
+    // an invalid post type was specified
+    res.status(400).send('Invalid post type specified')
   )
 }
 
