@@ -81,6 +81,22 @@ describe('create post', () => {
     })
   })
 
+  it('does not save a post if an invalid post type is specified', done => {
+    createPostRequest({
+      title: 'test-title',
+      description: 'test post description',
+      images: [],
+      thumbnailImage: '',
+      embedContent: '',
+      featured: false,
+      type: ''
+    }).then(res => {
+      expect(res.status).to.equal(400)
+
+      done()
+    })
+  })
+
   afterEach(done => {
     const queryPostTypes = PostType.deleteMany({})
     const queryPosts = Post.deleteMany({})
