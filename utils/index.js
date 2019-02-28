@@ -1,9 +1,9 @@
 const Post = require('../models/Post')
 const PostType = require('../models/PostType')
 
-const writePostToDatabase = data => (
-  data._id ? (
-    Post.update({ _id: data._id }, data)
+const writePostToDatabase = (data, _id) => (
+  _id ? (
+    Post.updateOne({ _id }, data)
   ): Post.create(data)
 )
 
