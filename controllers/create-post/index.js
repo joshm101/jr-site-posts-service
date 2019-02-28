@@ -1,17 +1,14 @@
 const PostType = require('../../models/PostType')
 
-const { writePostToDatabase, postTypeValid } = require('../../utils')
+const {
+  writePostToDatabase,
+  postTypeValid,
+  getPostDataFromReqBody
+} = require('../../utils')
 
 const createPost = (req, res) => {
-  const {
-    title,
-    description,
-    images,
-    thumbnailImage,
-    embedContent,
-    featured,
-    type
-  } = req.body;
+  const postData = getPostDataFromReqBody(req.body)
+  const { title, thumbnailImage, type } = postData
 
   if (!title) {
     res.status(400).send({
@@ -32,15 +29,7 @@ const createPost = (req, res) => {
   // TODO: JWT validation, access user info from JWT
 
   postTypeValid(type).then(() => {
-    return writePostToDatabase({
-      title,
-      description,
-      images,
-      thumbnailImage,
-      embedContent,
-      featured,
-      type,
-    }).then(post =>
+    return writePostToDatabase(postData).then(post =>
       res.status(200).send({ data: post })
     ).catch(error =>
       res.status(500).send('Could not save post')
