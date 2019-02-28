@@ -32,8 +32,27 @@ const extractPostData = reqBody => (
   } = reqBody
 )
 
+const validatePostData = data => {
+  const { title, thumbnailImage } = data
+  const errors = []
+  let error = {}
+
+  if (!title) {
+    error = { message: 'A post must have a title' }
+    errors.push(error)
+  }
+
+  if (!thumbnailImage) {
+    error = { message: 'A post must have a thumbnail image' }
+    errors.push(error)
+  }
+
+  return errors
+}
+
 module.exports = {
   writePostToDatabase,
   extractPostData,
-  postTypeValid
+  postTypeValid,
+  validatePostData
 }

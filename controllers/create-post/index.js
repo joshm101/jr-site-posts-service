@@ -3,27 +3,21 @@ const PostType = require('../../models/PostType')
 const {
   writePostToDatabase,
   postTypeValid,
-  extractPostData
+  extractPostData,
+  validatePostData
 } = require('../../utils')
 
 const createPost = (req, res) => {
   const postData = extractPostData(req.body)
-  const { title, thumbnailImage, type } = postData
+  const { type } = postData
+  const errors = validatePostData(postData)
+  if (errors.length) {
+    const payload = {
+      errors: errors.map(error => error.message),
+      message: 'Could not save post'
+    };
 
-  if (!title) {
-    res.status(400).send({
-      message: 'A post must have a title'
-    })
-
-    return
-  }
-
-  if (!thumbnailImage) {
-    res.status(400).send({
-      message: 'A post must have a thumbnail image'
-    })
-
-    return
+    return res.status(400).send(payload)
   }
 
   // TODO: JWT validation, access user info from JWT
