@@ -1,62 +1,29 @@
-const Post = require('../../models/Post')
 const PostType = require('../../models/PostType')
 
-const postTypeValid = typeId => {
-    const query = PostType.findById(typeId)
-    const queryPromise = query.exec()
-
-    return queryPromise.then(postType => {
-      if (!postType) {
-        // post type with ID of typeId not found,
-        // throw errror
-        throw new Error('Invalid post type')
-      }
-    })
-}
-
-const writePostToDatabase = data => (
-  Post.create(data)
-)
+const {
+  writePostToDatabase,
+  postTypeValid,
+  extractPostData,
+  validatePostData
+} = require('../../utils')
 
 const createPost = (req, res) => {
-  const {
-    title,
-    description,
-    images,
-    thumbnailImage,
-    embedContent,
-    featured,
-    type
-  } = req.body;
+  const postData = extractPostData(req.body)
+  const { type } = postData
+  const errors = validatePostData(postData)
+  if (errors.length) {
+    const payload = {
+      errors: errors.map(error => error.message),
+      message: 'Could not save post'
+    };
 
-  if (!title) {
-    res.status(400).send({
-      message: 'A post must have a title'
-    })
-
-    return
-  }
-
-  if (!thumbnailImage) {
-    res.status(400).send({
-      message: 'A post must have a thumbnail image'
-    })
-
-    return
+    return res.status(400).send(payload)
   }
 
   // TODO: JWT validation, access user info from JWT
 
   postTypeValid(type).then(() => {
-    return writePostToDatabase({
-      title,
-      description,
-      images,
-      thumbnailImage,
-      embedContent,
-      featured,
-      type,
-    }).then(post =>
+    return writePostToDatabase(postData).then(post =>
       res.status(200).send({ data: post })
     ).catch(error =>
       res.status(500).send('Could not save post')
