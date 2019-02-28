@@ -6,6 +6,7 @@ const deletePost = require('../../controllers/delete-post')
 const updatePost = require('../../controllers/update-post')
 const updatePostType = require('../../controllers/update-post-type')
 const createPostType = require('../../controllers/create-post-type')
+const deletePostType = require('../../controllers/delete-post-type')
 
 const apiRouter = express.Router()
 
@@ -18,9 +19,12 @@ apiRouter.get('/posts', getPosts)
 apiRouter.post('/posts', createPost)
 apiRouter.delete('/posts/:postId', deletePost)
 apiRouter.put('/posts/:postId', updatePost)
+
 apiRouter.get('/post-types', getPostTypes)
+apiRouter.delete('/post-types/:postTypeId', deletePostType)
 apiRouter.put('/post-types/:postTypeId', updatePostType)
 apiRouter.post('/post-types/', createPostType)
+
 apiRouter.get('/', root)
 
 module.exports = apiRouter
