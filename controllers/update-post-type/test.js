@@ -19,10 +19,14 @@ const updatePostTypeRequest = data => (
 
 describe('update post type', () => {
   before(done => {
-    // before test run, create post type for use in testing
-    const createPostTypeQuery = PostType.create({ name: 'testing' })
-    createPostTypeQuery.then(postType => {
-      id = postType._id
+    // before test run, create post types for use in testing
+    const firstPostTypeQuery = PostType.create({ name: 'testing' })
+    const secondPostTypeQuery = PostType.create({ name: 'some-name' })
+
+    Promise.all(
+      [firstPostTypeQuery, secondPostTypeQuery]
+    ).then(([firstPostType, _]) => {
+      id = firstPostType._id
       done()
     })
   })
@@ -42,6 +46,18 @@ describe('update post type', () => {
 
     updatePostTypeRequest(update).then(res => {
       expect(res.status).to.equal(400)
+    })
+  })
+
+  it('enforces post type name uniqueness', done => {
+    const update = { name: 'some-name' }
+
+    updatePostTypeRequest(update).then(res => {
+      expect(res.status).to.equal(400)
+      expect(res.body).to.have.property('message')
+      expect(res.body).to.have.property('errors')
+      expect(res.body.errors).to.have.length(1)
+      done()
     })
   })
 })
