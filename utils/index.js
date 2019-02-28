@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const PostType = require('../models/PostType')
 
 const writePostToDatabase = data => (
   data._id ? (
@@ -6,6 +7,20 @@ const writePostToDatabase = data => (
   ): Post.create(data)
 )
 
+const postTypeValid = typeId => {
+  const query = PostType.findById(typeId)
+  const queryPromise = query.exec()
+
+  return queryPromise.then(postType => {
+    if (!postType) {
+      // post type with ID of typeId not found,
+      // throw errror
+      throw new Error('Invalid post type')
+    }
+  })
+}
+
 module.exports = {
-  writePostToDatabase
+  writePostToDatabase,
+  postTypeValid
 }

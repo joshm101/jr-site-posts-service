@@ -1,19 +1,6 @@
 const PostType = require('../../models/PostType')
 
-const { writePostToDatabase } = require('../../utils')
-
-const postTypeValid = typeId => {
-    const query = PostType.findById(typeId)
-    const queryPromise = query.exec()
-
-    return queryPromise.then(postType => {
-      if (!postType) {
-        // post type with ID of typeId not found,
-        // throw errror
-        throw new Error('Invalid post type')
-      }
-    })
-}
+const { writePostToDatabase, postTypeValid } = require('../../utils')
 
 const createPost = (req, res) => {
   const {
