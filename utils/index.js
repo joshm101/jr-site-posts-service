@@ -20,8 +20,8 @@ const postTypeValid = typeId => {
   })
 }
 
-const extractPostData = reqBody => (
-  {
+const extractPostData = reqBody => {
+  const {
     title,
     description,
     images,
@@ -30,7 +30,17 @@ const extractPostData = reqBody => (
     featured,
     type
   } = reqBody
-)
+
+  return {
+    title,
+    description,
+    images,
+    thumbnailImage,
+    embedContent,
+    featured,
+    type
+  }
+}
 
 const validatePostData = data => {
   const { title, thumbnailImage } = data
