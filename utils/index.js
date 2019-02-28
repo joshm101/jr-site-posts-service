@@ -20,7 +20,7 @@ const postTypeValid = typeId => {
   })
 }
 
-const getPostDataFromReqBody = reqBody => (
+const extractPostData = reqBody => (
   {
     title,
     description,
@@ -34,6 +34,6 @@ const getPostDataFromReqBody = reqBody => (
 
 module.exports = {
   writePostToDatabase,
-  getPostDataFromReqBody,
+  extractPostData,
   postTypeValid
 }

@@ -3,11 +3,11 @@ const PostType = require('../../models/PostType')
 const {
   writePostToDatabase,
   postTypeValid,
-  getPostDataFromReqBody
+  extractPostData
 } = require('../../utils')
 
 const createPost = (req, res) => {
-  const postData = getPostDataFromReqBody(req.body)
+  const postData = extractPostData(req.body)
   const { title, thumbnailImage, type } = postData
 
   if (!title) {
