@@ -57,6 +57,7 @@ const createPostType = (req, res) => {
       res.status(200).send({ data: postType })
     ).catch(error =>
       res.status(500).send({
+        errors: [{ message: 'An unknown error occurred' }],
         message: 'Could not create post type'
       })
     )

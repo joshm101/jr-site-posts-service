@@ -5,9 +5,12 @@ const getPostTypes = (req, res) => {
     const queryPromise = query.exec()
 
     queryPromise.then(postTypes =>
-        res.send({ data: postTypes })  
+        res.send({ data: postTypes })
     ).catch(error =>
-        res.status(500).send({ message: 'Could not retrieve post types' })    
+        res.status(500).send({
+            errors: [{ message: 'An unknown error occurred' }],
+            message: 'Could not retrieve post types'
+        })
     )
 }
 

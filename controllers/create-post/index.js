@@ -26,12 +26,18 @@ const createPost = (req, res) => {
     return writePostToDatabase(postData).then(post =>
       res.status(200).send({ data: post })
     ).catch(error =>
-      res.status(500).send('Could not save post')
+      res.status(500).send({
+        errors: [{ message: 'An unknown error occurred' }],
+        message: 'Could not save post'
+      })
     )
   }).catch(error =>
     // postTypeValid util threw error indicating that
     // an invalid post type was specified
-    res.status(400).send('Invalid post type specified')
+    res.status(400).send({
+      errors: [{ message: 'Invalid post type specified' }],
+      message: 'Could not save post'
+    })
   )
 }
 
