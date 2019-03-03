@@ -31,13 +31,19 @@ const updatePost = (req, res) => {
     return writePostToDatabase(postData, postId).then(post =>
       res.status(200).send({ data: post })
     ).catch(error =>
-      // postTypeValid util threw error indicating that
-      // an invalid post type was specified
-      res.status(400).send({
-        message: 'Invalid post type specified'
+      res.status(500).send({
+        message: 'Could not update post',
+        errors: [{ message: 'An unknown error occurred' }]
       })
     )
-  })
+  }).catch(error =>
+    // postTypeValid util threw error indicating that
+    // an invalid post type was specified
+    res.status(400).send({
+      message: 'Could not update post',
+      errors: [{ message: 'Invalid post type specified' }]
+    })
+  )
 }
 
 module.exports = updatePost
