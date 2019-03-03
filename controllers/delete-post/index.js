@@ -5,7 +5,8 @@ const deletePost = (req, res) => {
 
   if (!postId) {
     res.status(400).send({
-      message: 'ID of post to delete is required'
+      errors: [{ message: 'ID of post to delete is required' }],
+      message: 'Could not delete post'
     })
   }
 
@@ -14,7 +15,8 @@ const deletePost = (req, res) => {
   Post.findById(postId).then(post => {
     if (!post) {
       res.status(400).send({
-        message: 'Invalid post ID'
+        errors: [{ message: 'Invalid post ID' }],
+        message: 'Could not delete post'
       })
       return
     }
@@ -22,14 +24,18 @@ const deletePost = (req, res) => {
     Post.deleteOne({ _id: postId }).then(() =>
       res.status(200).send()
     ).catch(error =>
-      res.status(500).send({ message: 'Could not delete post' })
+      res.status(500).send({
+        errors: [{ message: 'An unknown error occurred' }],
+        message: 'Could not delete post'
+      })
     )
   }).catch(() =>
     // error when finding post with this ID --> invalid ID
     // assuming that given a valid ID, this catch block
     // will not be executed since a post will be found
     res.status(400).send({
-      message: 'Invalid post ID'
+      errors: [{ message: 'Invalid post ID' }],
+      message: 'Could not delete post'
     })
   )
 }
