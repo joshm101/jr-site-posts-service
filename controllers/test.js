@@ -1,4 +1,6 @@
 const dbConnect = require('../bin/utils/db-connect')
+const Post = require('../models/Post')
+const PostType = require('../models/PostType')
 
 // Connec to DB before any tests run.
 before(done => {
@@ -9,4 +11,14 @@ before(done => {
 })
 
 // Make sure process exits after all tests are done running
-after(() => process.exit(0))
+after(done => {
+  const queries = [
+    Post.deleteMany({}),
+    PostType.deleteMany({})
+  ]
+
+  Promise.all(queries).then(() => {
+    done()
+    process.exit(0)
+  })
+})
