@@ -56,14 +56,5 @@ describe('delete post type', () => {
       done()
     })
   })
-
-  after(done => {
-    const queries = [
-      Post.deleteMany({}),
-      PostType.deleteMany({})
-    ]
-
-    Promise.all(queries).then(() => done())
-  })
 })
 

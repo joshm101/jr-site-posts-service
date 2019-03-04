@@ -58,11 +58,4 @@ describe('update post', () => {
       done()
     }).catch(console.log)
   })
-
-  after(done => {
-    const queryPostTypes = PostType.deleteMany({})
-    const queryPosts = Post.deleteMany({})
-
-    Promise.all([queryPostTypes, queryPosts]).then(() => done())
-  })
 })

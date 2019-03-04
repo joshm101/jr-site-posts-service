@@ -38,11 +38,4 @@ describe('delete post', () => {
       done()
     })
   })
-
-  // remove all posts after all tests are done
-  after(done => {
-    const query = Post.deleteMany({})
-
-    query.then(() => done())
-  })
 })
