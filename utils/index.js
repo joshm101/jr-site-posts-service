@@ -1,5 +1,10 @@
 const Post = require('../models/Post')
 const PostType = require('../models/PostType')
+const {
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE,
+  buildDBPagingParams
+} = require('./build-db-paging-params')
 
 const writePostToDatabase = (data, _id) => (
   _id ? (
@@ -64,5 +69,8 @@ module.exports = {
   writePostToDatabase,
   extractPostData,
   postTypeValid,
-  validatePostData
+  validatePostData,
+  buildDBPagingParams,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE
 }
