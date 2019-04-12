@@ -4,7 +4,10 @@
   "description": "Microservice for jr-site's posts",
   "main": "bin/www",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test npm run exec-mocha",
+    "start-dev": "cross-env NODE_ENV=development node ./bin/www",
+    "start-test-dev": "cross-env NODE_ENV=test node ./bin/www",
+    "exec-mocha": "mocha \"./controllers/**/test.js\" \"./utils/**/test.js\" --recursive"
   },
   "author": "Joshua Mora",
   "license": "ISC",
@@ -16,11 +19,14 @@
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.14.1",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.0.2"
   }
 }
