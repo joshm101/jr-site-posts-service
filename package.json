@@ -6,6 +6,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test npm run exec-mocha",
     "start-dev": "cross-env NODE_ENV=development node ./bin/www",
+    "start-prod": "cross-env NODE_ENV=production node ./bin/www",
     "start-test-dev": "cross-env NODE_ENV=test node ./bin/www",
     "exec-mocha": "mocha \"./controllers/**/test.js\" \"./utils/**/test.js\" --recursive"
   },

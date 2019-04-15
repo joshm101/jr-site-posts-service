@@ -1,5 +1,5 @@
 ./stop-containers.sh
-docker build -t jr-site-posts-service-dev .
+docker build -f ./docker/dev/Dockerfile -t jr-site-posts-service-dev .
 docker run \
 --env JR_SITE_DEV_DB_CONNECTION_URI=${JR_SITE_DEV_DB_CONNECTION_URI} \
 --env JR_SITE_DEV_DB_CONNECTION_USERNAME=${JR_SITE_DEV_DB_CONNECTION_USERNAME} \
