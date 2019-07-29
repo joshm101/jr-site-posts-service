@@ -9,7 +9,7 @@ const root = (req, res) => {
 
 router.use((req, res, next) => {
   // Set CORS headers
-  res.append('Access-Controll-Allow-Origin', ['*'])
+  res.append('Access-Control-Allow-Origin', ['*'])
   res.append('Access-Control-Allowed-Methods', 'GET, POST, PUT, DELETE')
   res.append(
     'Access-Control-Allow-Headers',
