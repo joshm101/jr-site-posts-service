@@ -40,12 +40,14 @@ const getPosts = (req, res) => {
             data: posts,
             meta: { page, pageSize, total }
         })
-    ).catch(error =>
-        res.status(500).send({
+    ).catch(error => {
+        console.log('GET posts error')
+        console.log(error)
+        return res.status(500).send({
             errors: [{ message: 'An unknown error occurred' }],
             message: 'Could not retrieve posts'
         })
-    )
+    })
 }
 
 module.exports = getPosts
