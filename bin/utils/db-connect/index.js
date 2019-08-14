@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const validDevEnv = require('../valid-dev-env')
 const validTestEnv = require('../valid-test-env')
+const validProdEnv = require('../valid-prod-env')
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -12,8 +13,9 @@ let MONGODB_CONNECTION_USERNAME = ''
 let MONGODB_CONNECTION_PASSWORD = ''
 
 const envValid = (
-  (validDevEnv() && env === 'development') ||
-  (validTestEnv() && env === 'test')
+  (env === 'development' && validDevEnv()) ||
+  (env === 'test' && validTestEnv()) ||
+  (env === 'production' && validProdEnv())
 )
 
 if (!envValid) {
@@ -42,6 +44,18 @@ if (env === 'test' && envValid) {
   MONGODB_CONNECTION_URI = JR_SITE_TEST_DB_CONNECTION_URI
   MONGODB_CONNECTION_USERNAME = JR_SITE_TEST_DB_CONNECTION_USERNAME
   MONGODB_CONNECTION_PASSWORD = JR_SITE_TEST_DB_CONNECTION_PASSWORD
+}
+
+if (env === 'production' && envValid) {
+  const {
+    JR_SITE_PROD_DB_CONNECTION_URI,
+    JR_SITE_PROD_DB_CONNECTION_USERNAME,
+    JR_SITE_PROD_DB_CONNECTION_PASSWORD
+  } = process.env
+
+  MONGODB_CONNECTION_URI = JR_SITE_PROD_DB_CONNECTION_URI
+  MONGODB_CONNECTION_USERNAME = JR_SITE_PROD_DB_CONNECTION_USERNAME
+  MONGODB_CONNECTION_PASSWORD = JR_SITE_PROD_DB_CONNECTION_PASSWORD
 }
 
 const CONNECTION_STRING = (
