@@ -49,5 +49,20 @@ jobs:
             docker build -f ./docker/dev/Dockerfile -t jshm101/jr-site-posts:dev .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push jshm101/jr-site-posts:dev
+  deploy:
+    steps:
+      - run:
+          name: SSH & run deploy script
+          command: |
+            ssh root@165.227.255.40 "./deploy-app.sh"
+workflows:
+  build-and-deploy:
+    jobs:
+      - build:
+          name: Build microservice
+      - deploy:
+          name: Deploy microservice
+          requires:
+            - build
 
 
