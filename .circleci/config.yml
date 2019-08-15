@@ -57,7 +57,7 @@ jobs:
       - run:
           name: SSH & run deploy script
           command: |
-            ssh root@165.227.255.40 "./deploy-app.sh"
+            ssh -o StrictHostKeyChecking=no root@165.227.255.40 "./deploy-app.sh"
 workflows:
   version: 2
   build-and-deploy:
