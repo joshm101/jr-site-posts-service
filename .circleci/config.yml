@@ -50,6 +50,9 @@ jobs:
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push jshm101/jr-site-posts:dev
   deploy:
+    docker:
+      - image: circleci/node:10.16
+    working_directory: ~/
     steps:
       - run:
           name: SSH & run deploy script
