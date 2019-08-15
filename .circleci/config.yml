@@ -41,4 +41,11 @@ jobs:
           name: Run tests
           command: |
             npm test
+      - run:
+          name: Build & push Docker image
+          command: |
+            docker build -f ./docker/dev/Dockerfile -t jshm101/jr-site-posts:dev .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push jshm101/jr-site-posts:dev
+
 
