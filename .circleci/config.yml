@@ -42,7 +42,7 @@ jobs:
           command: |
             npm test
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Build & push Docker image
           command: |
