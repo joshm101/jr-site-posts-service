@@ -22,7 +22,7 @@ const updatePostType = (req, res) => {
       // name from request body already in use
       return res.status(400).send({
         errors: [
-          { message: `The post type name, ${name}, is already in use` }
+          { message: `The post type name "${name}" is already in use` }
         ],
         message: 'Could not update post type'
       })
