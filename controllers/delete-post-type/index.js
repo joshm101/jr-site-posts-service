@@ -32,7 +32,12 @@ const deletePostType = (req, res) => {
     if (typeInUse) {
       // post type currently in use by a post, cannot delete
       const errors = [
-        { message: 'There are posts assigned to this post type' }
+        {
+          message: (
+            'There are posts assigned to this post type; ' +
+            'post types in use cannot be deleted.'
+          )
+        }
       ];
 
       return res.status(400).send({
